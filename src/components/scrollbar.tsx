@@ -1,10 +1,36 @@
-export const Scrollbar = defineComponent({
-  setup() {
+import PerfectScrollbar from 'perfect-scrollbar'
+
+interface ScrollbarProps {
+  options?: PerfectScrollbar.Options
+}
+
+export const Scrollbar = defineComponent<ScrollbarProps>({
+  setup({ options }) {
     return () => {
+      const refScrollWrapper = ref<HTMLDivElement>()
+      let ps: PerfectScrollbar
+
+      onMounted(() => {
+        if (!refScrollWrapper.value) {
+          console.warn('No valid \'PerfectScrollbar\' container found')
+          return
+        }
+
+        ps = new PerfectScrollbar(refScrollWrapper.value, {
+          minScrollbarLength: 20,
+          maxScrollbarLength: 160,
+          ...options,
+        })
+      })
+
+      onUnmounted(() => {
+        ps.destroy()
+      })
+
       return (
-        <>
-          Scrollbar
-        </>
+        <div ref={refScrollWrapper} class={['relative', 'of-hidden']}>
+          <slot />
+        </div>
       )
     }
   },

@@ -10,7 +10,7 @@ declare module '@vue/runtime-core' {
     Background: typeof import('./components/color-avatar/components/background.tsx')['default']
     ColorAvatar: typeof import('./components/color-avatar/index.tsx')['default']
     Logo: typeof import('./components/logo.tsx')['default']
-    Navbar: typeof import('./components/navbar.tsx')['default']
+    Navbar: typeof import('./components/action-bar.tsx')['default']
     Scrollbar: typeof import('./components/scrollbar.tsx')['default']
     SectionWrapper: typeof import('./components/section-wrapper.tsx')['default']
   }

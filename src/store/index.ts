@@ -64,7 +64,9 @@ export const useStore = defineStore(
     }
   },
   {
-
+    persist: {
+      enabled: true,
+    },
   },
 )
 
