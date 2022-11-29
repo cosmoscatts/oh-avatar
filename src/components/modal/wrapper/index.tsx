@@ -1,24 +1,24 @@
-import { withModifiers } from 'vue'
+import { Transition, withModifiers } from 'vue'
 import styles from './index.module.less'
 
 interface ModalWrapperProps {
   visible?: boolean
+  onClose: () => void
 }
 
 export const ModalWrapper = defineComponent<ModalWrapperProps>({
-  emits: ['close'],
-  setup({ visible = false }, { emit }) {
+  setup({ visible = false, onClose }) {
     return () => {
       return (
-        <transition name="fade">
+        <Transition name="fade">
           {
             visible
-              ? <div class={styles.modal} onClick={withModifiers(() => emit('close'), ['self'])}>
+              ? <div class={styles.modal} onClick={withModifiers(onClose, ['self'])}>
                   <slot />
                 </div>
               : <></>
           }
-        </transition>
+        </Transition>
       )
     }
   },

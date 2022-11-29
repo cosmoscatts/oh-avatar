@@ -6,9 +6,12 @@ import IconFlip from '~/assets/icons/icon-flip.svg'
 import IconNext from '~/assets/icons/icon-next.svg'
 import { ActionType } from '~/enums'
 
-export const ActionBar = defineComponent({
-  emits: ['action'],
-  setup(_props, { emit }) {
+interface ActionBarProps {
+  onAction: (type: ActionType) => void
+}
+
+export const ActionBar = defineComponent<ActionBarProps>({
+  setup({ onAction }) {
     const { t } = useI18n()
 
     const store = useStore()
@@ -51,7 +54,7 @@ export const ActionBar = defineComponent({
                         key={type}
                         class={[styles['menu-item'], [styles['menu-item'], 'disabled']][Number(disabled)]}
                         title={tip}
-                        onClick={() => emit('action', type)}
+                        onClick={() => onAction(type)}
                       >
                         <img src={icon} alt={tip} />
                       </div>

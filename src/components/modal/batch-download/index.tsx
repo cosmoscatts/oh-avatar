@@ -9,11 +9,12 @@ import { recordEvent } from '~/utils/ga'
 interface BatchDownloadModalProps {
   visible?: boolean
   avatarList?: AvatarOption[]
+  onClose: () => void
+  onRegenerate: () => void
 }
 
 export const BatchDownloadModal = defineComponent<BatchDownloadModalProps>({
-  emits: ['regenerate', 'close'],
-  setup({ visible = false, avatarList = [] }, { emit }) {
+  setup({ visible = false, avatarList = [], onClose, onRegenerate }) {
     const { t } = useI18n()
 
     const making = ref(false)
@@ -88,7 +89,7 @@ export const BatchDownloadModal = defineComponent<BatchDownloadModalProps>({
             type="button"
             class={styles['regenerate-btn']}
             disabled={making.value}
-            onClick={() => emit('regenerate')}
+            onClick={onRegenerate}
           >
             { t('text.regenerate') }
           </button>
@@ -137,7 +138,7 @@ export const BatchDownloadModal = defineComponent<BatchDownloadModalProps>({
 
     return () => {
       return (
-        <ModalWrapper visible={visible} onClose={() => emit('close')}>
+        <ModalWrapper visible={visible} onClose={onClose}>
           <div class={styles.container}>
             {topBar}
             {contentBox}

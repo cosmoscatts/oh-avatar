@@ -1,0 +1,114 @@
+@import 'src/styles/var';
+
+.code-box {
+  @code-header-height: 4rem;
+  @code-box-side-padding-normal: 2rem;
+  @code-box-side-padding-small: 1rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 75%;
+  max-width: 800px;
+  height: min(90vh, 1000px);
+  margin: 0 auto;
+  padding: @code-header-height @code-box-side-padding-normal 2.5rem
+  @code-box-side-padding-normal;
+  overflow: hidden;
+  background-color: lighten(@color-dark, 3);
+  border-radius: 1rem;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s;
+
+  @media screen and (max-width: 1200px) {
+    width: 75%;
+  }
+
+  @media screen and (max-width: @screen-md) {
+    width: 80%;
+  }
+
+  @media screen and (max-width: @screen-sm) {
+    width: 90%;
+    padding: @code-header-height @code-box-side-padding-small 2.5rem
+    @code-box-side-padding-small;
+
+    .code-header {
+      padding: 0 @code-box-side-padding-small;
+    }
+  }
+
+  .code-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: @code-header-height;
+    padding: 0 @code-box-side-padding-normal;
+
+    .title {
+      font-weight: bold;
+    }
+
+    .close-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 2rem;
+      height: 2rem;
+      margin-left: auto;
+      background-color: lighten(@color-dark, 8);
+      border-radius: 50%;
+      cursor: pointer;
+
+      .icon-close {
+        width: 45%;
+        opacity: 0.6;
+        transition: opacity 0.2s;
+      }
+
+      &:hover {
+        .icon-close {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  .code-content-box {
+    position: relative;
+    height: 20rem;
+    height: 100%;
+    padding: 1rem 0;
+    background: darken(@color-dark, 1);
+    border-radius: 0.8rem;
+
+    .code-scroll-wrapper {
+      height: 100%;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 5rem;
+      height: 2rem;
+      color: #fff;
+      background-color: @color-accent;
+      border-radius: 0.4rem;
+      transform: translate(-50%, -45%);
+      cursor: pointer;
+      transition: color 0.15s, background-color 0.15s;
+
+      &.copied {
+        color: @color-dark;
+        background-color: @color-secondary;
+      }
+    }
+  }
+}
+

@@ -46,3 +46,30 @@ img {
     background-color: #2c323a;
   }
 }
+
+
+.code-content {
+  display: block;
+  padding: 0 1.5rem;
+  color: #c0c5ce;
+  color: #81cfef;
+  font-size: 1.25rem;
+  font-family: 'Ubuntu Mono', Fallback;
+  line-height: 1.4;
+
+  @media screen and (max-width: @screen-sm) {
+    padding: 0 1rem;
+    font-size: 1rem;
+  }
+
+  & > .token {
+    &.key {
+      color: #ffcb6b;
+    }
+
+    &.string,
+    &.number {
+      color: #c3e88d;
+    }
+  }
+}
