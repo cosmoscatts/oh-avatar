@@ -2,7 +2,7 @@ import styles from './index.module.less'
 import { SCREEN } from '~/utils/constant'
 
 const Container = defineComponent({
-  setup() {
+  setup(_, { slots }) {
     const { isCollapsed, openSider, closeSider } = useSider()
     const handleWindowResize = () =>
       [openSider, closeSider][Number(window.innerWidth <= SCREEN.lg)]()
@@ -43,7 +43,7 @@ const Container = defineComponent({
     return () => {
       return (
         <section class={classNames}>
-          <slot />
+          { slots.default?.() ?? null }
         </section>
       )
     }

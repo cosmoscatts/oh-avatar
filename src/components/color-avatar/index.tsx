@@ -7,7 +7,7 @@ import { AVATAR_LAYER, NONE } from '~/utils/constant'
 import { widgetData } from '~/utils/dynamic-data'
 
 interface ColorAvatarProps {
-  id: string
+  id?: string
   option: AvatarOption
   size?: number
 }

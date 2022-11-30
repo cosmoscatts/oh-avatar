@@ -2,7 +2,7 @@ import styles from './index.module.less'
 import IconRight from '~/assets/icons/icon-right.svg'
 
 const Sider = defineComponent({
-  setup() {
+  setup(_, { slots }) {
     const { isCollapsed, openSider, closeSider } = useSider()
     const func = [closeSider, openSider][Number(isCollapsed.value)]
     const classNames = computed(() => (
@@ -10,7 +10,7 @@ const Sider = defineComponent({
     return () => {
       return (
         <aside class={classNames}>
-          <slot />
+          { slots.default?.() ?? null }
 
           <div class={styles.trigger} onClick={func}>
             <img src={IconRight} class={styles['icon-right']} alt="arrow" />

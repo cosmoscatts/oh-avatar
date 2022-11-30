@@ -1,15 +1,15 @@
 @import 'src/styles/var';
 
-.configurator-scroll {
+.configuration-scroll {
   width: @layout-sider-width;
   height: 100%;
 
   @media screen and (max-width: @screen-lg) {
-    background-color: @color-configurator;
+    background-color: @color-configuration;
   }
 }
 
-.configurator {
+.configuration {
   width: 100%;
   color: @color-text;
 
@@ -75,7 +75,7 @@
         margin: 0 auto;
         font-size: 16px;
         border-radius: 50%;
-        box-shadow: 0 0 0.05em 0.2em @color-configurator;
+        box-shadow: 0 0 0.05em 0.2em @color-configuration;
 
         &.transparent {
           background: #fff !important;
@@ -114,7 +114,7 @@
           top: 50%;
           left: 50%;
           z-index: 1;
-          color: @color-configurator;
+          color: @color-configuration;
           font-size: 1.5rem;
           transform: translate(-50%, -50%) scale(0.5);
           opacity: 0;
@@ -150,11 +150,11 @@
       transition: background-color 0.2s;
 
       &.selected.selected {
-        background-color: lighten(@color-configurator, 6);
+        background-color: lighten(@color-configuration, 6);
       }
 
       &:hover {
-        background-color: lighten(@color-configurator, 0);
+        background-color: lighten(@color-configuration, 0);
       }
 
       & > :deep(svg) {

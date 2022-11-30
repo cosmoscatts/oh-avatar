@@ -93,31 +93,31 @@
     width: 100%;
     height: 100%;
 
-    @mixin gradient-style($color) {
-      position: absolute;
-      width: 100vh;
-      height: 100vh;
-      background-image: radial-gradient(
-        rgba(color, 0.8) 20%,
-        rgba($color, 0.6) 40%,
-        rgba($color, 0.4) 60%,
-        rgba($color, 0.2) 80%,
-        transparent 100%
-      );
-      border-radius: 50%;
-      opacity: 0.2;
-      filter: blur(4rem);
-    }
+    // @mixin gradient-style(@color) {
+    //   position: absolute;
+    //   width: 100vh;
+    //   height: 100vh;
+    //   background-image: radial-gradient(
+    //     rgba(color, 0.8) 20%,
+    //     rgba($color, 0.6) 40%,
+    //     rgba($color, 0.4) 60%,
+    //     rgba($color, 0.2) 80%,
+    //     transparent 100%
+    //   );
+    //   border-radius: 50%;
+    //   opacity: 0.2;
+    //   filter: blur(4rem);
+    // }
 
     .gradient-top {
-      @include gradient-style(@color-secondary);
+      // @include gradient-style(@color-secondary);
 
       top: -50%;
       right: -20%;
     }
 
     .gradient-bottom {
-      @include gradient-style(@color-accent);
+      // @include gradient-style(@color-accent);
 
       bottom: -50%;
       left: -20%;

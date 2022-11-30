@@ -5,7 +5,7 @@ interface ScrollbarProps {
 }
 
 export const Scrollbar = defineComponent<ScrollbarProps>({
-  setup({ options }) {
+  setup({ options }, { slots }) {
     return () => {
       const refScrollWrapper = ref<HTMLDivElement>()
       let ps: PerfectScrollbar
@@ -29,7 +29,7 @@ export const Scrollbar = defineComponent<ScrollbarProps>({
 
       return (
         <div ref={refScrollWrapper} class={['relative', 'of-hidden']}>
-          <slot />
+          {slots.default?.() ?? null}
         </div>
       )
     }

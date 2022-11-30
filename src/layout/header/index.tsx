@@ -1,6 +1,6 @@
 import styles from './index.module.less'
 import IconGitHub from '~/assets/icons/icon-github.svg'
-import Logo from '~/components/Logo.vue'
+import { Logo } from '~/components/logo'
 import { recordEvent } from '~/utils/ga'
 
 const Header = defineComponent({

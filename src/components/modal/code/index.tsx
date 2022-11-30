@@ -51,7 +51,9 @@ export const CodeModal = defineComponent<CodeModalProps>({
     return () => {
       return (
         <ModalWrapper visible={visible} onClose={onClose}>
-          <div class={styles['code-box']}>
+          {
+            () => (
+              <div class={styles['code-box']}>
             <div class={styles['code-header']}>
               <div class={styles.title}>{ t('text.codeModalTitle') }</div>
 
@@ -65,7 +67,11 @@ export const CodeModal = defineComponent<CodeModalProps>({
                 class={styles['code-scroll-wrapper']}
                 options={{ suppressScrollX: false }}
               >
-                <pre><code class={styles['code-content']} v-html={highlightedCode}></code></pre>
+               {
+                () => (
+                  <pre><code class={styles['code-content']} v-html={highlightedCode}></code></pre>
+                )
+               }
               </Scrollbar>
 
               <button
@@ -77,6 +83,8 @@ export const CodeModal = defineComponent<CodeModalProps>({
               </button>
             </div>
           </div>
+            )
+          }
         </ModalWrapper>
       )
     }

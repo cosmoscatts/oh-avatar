@@ -4,17 +4,17 @@ import styles from './index.module.less'
 interface DownloadModalProps {
   visible?: boolean
   imageUrl: string
+  onClose: () => void
 }
 
 export const DownloadModal = defineComponent<DownloadModalProps>({
-  emits: ['close'],
-  setup({ visible = false, imageUrl }, { emit }) {
+  setup({ visible = false, imageUrl, onClose }) {
     const { t } = useI18n()
 
     const _component = (
     <div
       class={styles['download-modal-wrapper']}
-      onClick={() => emit('close')}
+      onClick={onClose}
     >
       <div class={styles['download-modal']} onClick={withModifiers(() => {}, ['stop'])}>
         <div class={styles['modal-body']}>
@@ -29,7 +29,7 @@ export const DownloadModal = defineComponent<DownloadModalProps>({
           <p class={styles.tip}>{ t('text.downloadTip') } 🥳</p>
         </div>
 
-        <button type="button" class={styles['close-btn']} onClick={() => emit('close')}>
+        <button type="button" class={styles['close-btn']} onClick={onClose}>
           { t('action.close') }
         </button>
       </div>

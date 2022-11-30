@@ -7,16 +7,16 @@ interface ModalWrapperProps {
 }
 
 export const ModalWrapper = defineComponent<ModalWrapperProps>({
-  setup({ visible = false, onClose }) {
+  setup({ visible = false, onClose }, { slots }) {
     return () => {
       return (
         <Transition name="fade">
           {
             visible
               ? <div class={styles.modal} onClick={withModifiers(onClose, ['self'])}>
-                  <slot />
+                  {slots.default?.() ?? null}
                 </div>
-              : <></>
+              : <div></div>
           }
         </Transition>
       )

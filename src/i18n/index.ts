@@ -14,4 +14,5 @@ export default createI18n({
   locale,
   fallbackLocale,
   messages,
+  legacy: false,
 })

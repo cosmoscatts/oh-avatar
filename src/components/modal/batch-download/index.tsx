@@ -125,7 +125,9 @@ export const BatchDownloadModal = defineComponent<BatchDownloadModalProps>({
           style="height: 100%; overflow: hidden"
           options={{ suppressScrollX: false }}
         >
-          <div class={styles.content}>
+          {
+            () => (
+              <div class={styles.content}>
 
             {
               avatarList.map((opt, i) => (
@@ -133,16 +135,22 @@ export const BatchDownloadModal = defineComponent<BatchDownloadModalProps>({
               ))
             }
           </div>
+            )
+          }
         </Scrollbar>
     )
 
     return () => {
       return (
         <ModalWrapper visible={visible} onClose={onClose}>
-          <div class={styles.container}>
-            {topBar}
-            {contentBox}
-          </div>
+          {
+            () => (
+              <div class={styles.container}>
+              {topBar}
+              {contentBox}
+            </div>
+            )
+          }
         </ModalWrapper>
       )
     }
