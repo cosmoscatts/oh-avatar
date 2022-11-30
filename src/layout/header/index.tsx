@@ -9,7 +9,7 @@ const Header = defineComponent({
       return (
         <header class={styles.header}>
           <Logo />
-          <h2 class={styles['site-title']}>Color Avatar</h2>
+          <h2 class={styles['site-title']}>Oh Avatar</h2>
           <div class={styles['header-right']}>
             <a
               href="https://github.com/cosmoscatts/oh-my-avatar"

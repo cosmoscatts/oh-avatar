@@ -1,3 +1,4 @@
+import type { Ref } from 'vue'
 import { name as appName } from '../../../../package.json'
 import { ModalWrapper } from '../wrapper'
 import styles from './index.module.less'
@@ -7,14 +8,14 @@ import type { AvatarOption } from '~/types'
 import { recordEvent } from '~/utils/ga'
 
 interface BatchDownloadModalProps {
-  visible?: boolean
-  avatarList?: AvatarOption[]
+  visible?: Ref<boolean>
+  avatarList?: Ref<AvatarOption[]>
   onClose: () => void
   onRegenerate: () => void
 }
 
 export const BatchDownloadModal = defineComponent<BatchDownloadModalProps>({
-  setup({ visible = false, avatarList = [], onClose, onRegenerate }) {
+  setup({ visible = ref(false), avatarList = ref([]), onClose, onRegenerate }) {
     const { t } = useI18n()
 
     const making = ref(false)
@@ -42,7 +43,7 @@ export const BatchDownloadModal = defineComponent<BatchDownloadModalProps>({
     }
 
     async function make() {
-      if (avatarList && !making.value) {
+      if (avatarList.value.length && !making.value) {
         making.value = true
         madeCount.value = 1
 
@@ -51,7 +52,7 @@ export const BatchDownloadModal = defineComponent<BatchDownloadModalProps>({
         const { default: JSZip } = await import('jszip')
         const jsZip = new JSZip()
 
-        for (let i = 0; i <= avatarList.length; i += 1) {
+        for (let i = 0; i <= avatarList.value.length; i += 1) {
           const dom = window.document.querySelector(`#avatar-${i}`)
 
           if (dom instanceof HTMLElement) {
@@ -81,63 +82,83 @@ export const BatchDownloadModal = defineComponent<BatchDownloadModalProps>({
       }
     }
 
-    const topBar = (
-      <div class={styles['top-bar']}>
-        <div>{ t('text.downloadMultipleTip') }</div>
-        <div class={styles.right}>
-          <button
-            type="button"
-            class={styles['regenerate-btn']}
-            disabled={making.value}
-            onClick={onRegenerate}
-          >
-            { t('text.regenerate') }
-          </button>
+    const TopBar = defineComponent({
+      setup() {
+        return () => {
+          return (
+            <div class={styles['top-bar']}>
+              <div>{ t('text.downloadMultipleTip') }</div>
+              <div class={styles.right}>
+                <button
+                  type="button"
+                  class={styles['regenerate-btn']}
+                  disabled={making.value}
+                  onClick={onRegenerate}
+                >
+                  { t('text.regenerate') }
+                </button>
 
-          <button type="button" class={styles['download-btn']} onClick={make}>
-            {
-              making.value
-                ? `${t('text.downloadingMultiple')}(${madeCount}/${
-                    avatarList?.length
-                  })`
-                : t('text.downloadMultiple')
-            }
-          </button>
-        </div>
-      </div>
-    )
-
-    const avatarBox = (opt: AvatarOption, i: number) => (
-      <div
-        class={styles['avatar-box']} key={i}
-        style={ `opacity: ${making.value && i + 1 > madeCount.value ? 0.5 : 1}` }
-      >
-        <ColorAvatar id={`avatar-${i}`} option={opt} size={280} />
-
-        <button class={styles['download-single']} onClick={() => handleDownload(i)}>
-          { t('action.download') }
-        </button>
-      </div>
-    )
-
-    const contentBox = (
-      <Scrollbar
-        style="height: 100%; overflow: hidden"
-        options={{ suppressScrollX: false }}
-      >
-        {
-          () => (
-            <div class={styles.content}>
-              {
-                avatarList?.map((opt, i) => (
-                  avatarBox(opt, i)
-                ))
-              }
+                <button type="button" class={styles['download-btn']} onClick={make}>
+                  {
+                    making.value
+                      ? `${t('text.downloadingMultiple')}(${madeCount.value}/${
+                          avatarList.value?.length
+                        })`
+                      : t('text.downloadMultiple')
+                  }
+                </button>
+              </div>
             </div>
           )
         }
-      </Scrollbar>
-    )
+      },
+    })
+
+    const avatarBox = (opt: AvatarOption, i: number) => {
+      return (
+        <div
+          class={styles['avatar-box']} key={i}
+          style={ `opacity: ${making.value && i + 1 > madeCount.value ? 0.5 : 1}` }
+        >
+          <ColorAvatar id={`avatar-${i}`} option={computed(() => opt)} size={280} />
+
+          <button class={styles['download-single']} onClick={() => handleDownload(i)}>
+            { t('action.download') }
+          </button>
+        </div>
+      )
+    }
+
+    const renderAvatarList = computed(() => {
+      return avatarList.value.map((opt, i) => (
+        avatarBox(opt, i)
+      ))
+    })
+
+    const ContentBox = defineComponent({
+      setup() {
+        return () => {
+          return (
+            <div class={styles['content-box']}>
+              <Scrollbar
+                class={['hfull', 'of-hidden']}
+                options={{ suppressScrollX: false }}
+              >
+                {
+                  () => (
+                    <div class={styles.content}>
+                      {
+                        renderAvatarList.value
+                      }
+                    </div>
+                  )
+                }
+              </Scrollbar>
+            </div>
+          )
+        }
+      },
+    })
 
     return () => {
       return (
@@ -145,9 +166,9 @@ export const BatchDownloadModal = defineComponent<BatchDownloadModalProps>({
           {
             () => (
               <div class={styles.container}>
-              {topBar}
-              {contentBox}
-            </div>
+                <TopBar />
+                <ContentBox />
+              </div>
             )
           }
         </ModalWrapper>

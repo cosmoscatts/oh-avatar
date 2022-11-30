@@ -1,4 +1,5 @@
 import type ClipboardJS from 'clipboard'
+import type { Ref } from 'vue'
 import { ModalWrapper } from '../wrapper'
 import styles from './index.module.less'
 import IconClose from '~/assets/icons/icon-close.svg'
@@ -6,12 +7,12 @@ import { Scrollbar } from '~/components/scrollbar'
 import { highlightJSON } from '~/utils'
 
 interface CodeModalProps {
-  visible?: boolean
+  visible?: Ref<boolean>
   onClose: () => void
 }
 
 export const CodeModal = defineComponent<CodeModalProps>({
-  setup({ visible = false, onClose }) {
+  setup({ visible = ref(false), onClose }) {
     const { t } = useI18n()
 
     const [avatarOption] = useAvatarOption()
@@ -69,7 +70,7 @@ export const CodeModal = defineComponent<CodeModalProps>({
                   >
                     {
                       () => (
-                        <pre><code class={styles['code-content']} v-html={highlightedCode}></code></pre>
+                        <pre><code class="code-content" v-html={highlightedCode.value}></code></pre>
                       )
                     }
                   </Scrollbar>

@@ -1,18 +1,18 @@
-import { withModifiers } from 'vue'
+import { type Ref, withModifiers } from 'vue'
 import styles from './index.module.less'
 
 interface DownloadModalProps {
-  visible?: boolean
+  visible?: Ref<boolean>
   imageUrl: string
   onClose: () => void
 }
 
 export const DownloadModal = defineComponent<DownloadModalProps>({
-  setup({ visible = false, imageUrl, onClose }) {
+  setup({ visible = ref(false), imageUrl, onClose }) {
     const { t } = useI18n()
 
     return () => {
-      return visible
+      return visible.value
         ? <div
             class={styles['download-modal-wrapper']}
             onClick={onClose}

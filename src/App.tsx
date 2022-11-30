@@ -193,7 +193,7 @@ const App = defineComponent({
                       <div class={styles['avatar-wrapper']}>
                         <ColorAvatar
                           ref={refColorAvatar}
-                          option={avatarOption.value}
+                          option={avatarOption}
                           size={280}
                           style={{
                             transform: `rotateY(${flipped.value ? -180 : 0}deg)`,
@@ -237,10 +237,10 @@ const App = defineComponent({
 
                     <Footer />
 
-                    <CodeModal visible={codeVisible.value} onClose={() => codeVisible.value = false} />
+                    <CodeModal visible={codeVisible} onClose={() => codeVisible.value = false} />
 
                     <DownloadModal
-                      visible={downloadModalVisible.value}
+                      visible={downloadModalVisible}
                       imageUrl={imageDataURL.value}
                       onClose={() => {
                         downloadModalVisible.value = false
@@ -261,9 +261,9 @@ const App = defineComponent({
           </Container>
 
           <BatchDownloadModal
-            visible={avatarListVisible.value}
+            visible={avatarListVisible}
             avatar-list={avatarList}
-            onRegenerate={generateMultiple}
+            onRegenerate={() => generateMultiple()}
             onClose={() => {
               avatarListVisible.value = false
               avatarList.value = []

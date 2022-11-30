@@ -1,18 +1,18 @@
-import { Transition, withModifiers } from 'vue'
+import { type Ref, Transition, withModifiers } from 'vue'
 import styles from './index.module.less'
 
 interface ModalWrapperProps {
-  visible?: boolean
+  visible?: Ref<boolean>
   onClose: () => void
 }
 
 export const ModalWrapper = defineComponent<ModalWrapperProps>({
-  setup({ visible = false, onClose }, { slots }) {
+  setup({ visible = ref(false), onClose }, { slots }) {
     return () => {
       return (
         <Transition name="fade">
           {
-            visible
+            visible.value
               ? <div class={styles.modal} onClick={withModifiers(onClose, ['self'])}>
                   {slots.default?.()}
                 </div>

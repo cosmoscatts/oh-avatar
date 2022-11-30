@@ -1,3 +1,4 @@
+import type { ComputedRef } from 'vue'
 import styles from './index.module.less'
 import { Background } from './components/background'
 import { WrapperShape } from '~/enums'
@@ -8,29 +9,29 @@ import { widgetData } from '~/utils/dynamic-data'
 
 interface ColorAvatarProps {
   id?: string
-  option: AvatarOption
+  option: ComputedRef<AvatarOption>
   size?: number
 }
 
 export const ColorAvatar = defineComponent<ColorAvatarProps>({
-  setup({ id, option = getRandomAvatarOption(), size = 280 }, { expose }) {
+  setup({ id, option = computed(() => getRandomAvatarOption()), size = 280 }, { expose }) {
     const refAvatar = ref<HTMLDivElement>()
     expose({ refAvatar })
 
     function getWrapperShapeClassName() {
-      if (!option.wrapperShape)
+      if (!option.value.wrapperShape)
         return ''
       return {
         [WrapperShape.Circle]: WrapperShape.Circle,
         [WrapperShape.Square]: WrapperShape.Square,
         [WrapperShape.Squircle]: WrapperShape.Squircle,
-      }[option.wrapperShape]
+      }[option.value.wrapperShape]
     }
 
     const svgContent = ref('')
 
     watchEffect(async () => {
-      const sortedList = Object.entries(option.widgets).sort(
+      const sortedList = Object.entries(option.value.widgets).sort(
         ([prevShape, prev], [nextShape, next]) => {
           const ix = prev.zIndex ?? AVATAR_LAYER[prevShape]?.zIndex ?? 0
           const iix = next.zIndex ?? AVATAR_LAYER[nextShape]?.zIndex ?? 0
@@ -94,7 +95,7 @@ export const ColorAvatar = defineComponent<ColorAvatarProps>({
             height: `${size}px`,
           }}
         >
-          <Background color={option.background.color} />
+          <Background color={computed(() => option.value.background.color)} />
           <div class={styles['avatar-payload']} v-html={svgContent.value} />
         </div>
       )

@@ -1,5 +1,5 @@
 {
-  "name": "oh-my-avatar",
+  "name": "oh-avatar",
   "type": "module",
   "scripts": {
     "dev": "vite",
