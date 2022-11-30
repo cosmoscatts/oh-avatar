@@ -10,28 +10,26 @@ const Container = defineComponent({
       [[styles.container], [styles.container, styles.full]][Number(isCollapsed.value)]))
 
     onMounted(() => {
-      (function () {
-        const throttle = function (
-          type: string,
-          customEventName: string,
-          obj: Window,
-        ) {
-          obj = obj || window
-          let running = false
-          const func = () => {
-            if (running)
-              return
+      const throttle = function (
+        type: string,
+        customEventName: string,
+        obj: Window,
+      ) {
+        obj = obj || window
+        let running = false
+        const func = () => {
+          if (running)
+            return
 
-            running = true
-            requestAnimationFrame(() => {
-              obj.dispatchEvent(new CustomEvent(customEventName))
-              running = false
-            })
-          }
-          obj.addEventListener(type, func)
+          running = true
+          requestAnimationFrame(() => {
+            obj.dispatchEvent(new CustomEvent(customEventName))
+            running = false
+          })
         }
-        throttle('resize', 'optimizedResize', window)
-      })()
+        obj.addEventListener(type, func)
+      }
+      throttle('resize', 'optimizedResize', window)
 
       window.addEventListener('optimizedResize', handleWindowResize)
     })
@@ -42,7 +40,7 @@ const Container = defineComponent({
 
     return () => {
       return (
-        <section class={classNames}>
+        <section class={classNames.value}>
           {slots.default?.()}
         </section>
       )

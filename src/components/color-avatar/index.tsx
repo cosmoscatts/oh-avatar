@@ -13,18 +13,18 @@ interface ColorAvatarProps {
 }
 
 export const ColorAvatar = defineComponent<ColorAvatarProps>({
-  setup({ id, option = getRandomAvatarOption(), size = 280 }) {
+  setup({ id, option = getRandomAvatarOption(), size = 280 }, { expose }) {
     const refAvatar = ref<HTMLDivElement>()
+    expose({ refAvatar })
 
     function getWrapperShapeClassName() {
+      if (!option.wrapperShape)
+        return ''
       return {
-        [WrapperShape.Circle]:
-        option.wrapperShape === WrapperShape.Circle,
-        [WrapperShape.Square]:
-          option.wrapperShape === WrapperShape.Square,
-        [WrapperShape.Squircle]:
-          option.wrapperShape === WrapperShape.Squircle,
-      }
+        [WrapperShape.Circle]: WrapperShape.Circle,
+        [WrapperShape.Square]: WrapperShape.Square,
+        [WrapperShape.Squircle]: WrapperShape.Squircle,
+      }[option.wrapperShape]
     }
 
     const svgContent = ref('')
@@ -57,7 +57,7 @@ export const ColorAvatar = defineComponent<ColorAvatarProps>({
             .replaceAll('$fillColor', widgetFillColor || 'transparent')
 
           return `
-            <g id="vue-color-avatar-${sortedList[i][0]}">
+            <g id="color-avatar-${sortedList[i][0]}">
               ${content}
             </g>
           `
@@ -85,16 +85,21 @@ export const ColorAvatar = defineComponent<ColorAvatarProps>({
         <div
           ref={refAvatar}
           id={id}
-          class={[styles['color-avatar'], getWrapperShapeClassName()]}
+          class={{
+            [styles['color-avatar']]: true,
+            [styles[getWrapperShapeClassName()]]: true,
+          }}
           style={{
             width: `${size}px`,
             height: `${size}px`,
           }}
         >
           <Background color={option.background.color} />
-          <div class={styles['avatar-payload']} v-html={svgContent} />
+          <div class={styles['avatar-payload']} v-html={svgContent.value} />
         </div>
       )
     }
   },
 })
+
+ColorAvatar.props = ['id', 'option', 'size']

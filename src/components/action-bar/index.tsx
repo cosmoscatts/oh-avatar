@@ -49,14 +49,16 @@ export const ActionBar = defineComponent<ActionBarProps>({
         <div class={styles['action-menu']}>
           {
             actions.value?.map(({ type, tip, disabled, icon }) => {
-              return <div
-                        key={type}
-                        class={[styles['menu-item'], [styles['menu-item'], 'disabled']][Number(disabled)]}
-                        title={tip}
-                        onClick={() => onAction(type)}
-                      >
-                        <img src={icon} alt={tip} />
-                      </div>
+              return (
+                <div
+                  key={type}
+                  class={[styles['menu-item'], [styles['menu-item'], styles.disabled]][Number(!!disabled)]}
+                  title={tip}
+                  onClick={() => onAction(type)}
+                >
+                  <img src={icon} alt={tip} />
+                </div>
+              )
             })
           }
         </div>
@@ -64,3 +66,5 @@ export const ActionBar = defineComponent<ActionBarProps>({
     }
   },
 })
+
+ActionBar.props = ['onAction']

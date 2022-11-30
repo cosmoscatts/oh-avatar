@@ -16,3 +16,4 @@ export const SectionWrapper = defineComponent<SectionWrapperProps>({
   },
 })
 
+SectionWrapper.props = ['title']

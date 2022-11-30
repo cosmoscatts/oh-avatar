@@ -66,7 +66,7 @@ const App = defineComponent({
     async function handleDownload() {
       try {
         downloading.value = true
-        const avatarEle = refColorAvatar.value?.avatarRef
+        const avatarEle = refColorAvatar.value?.refAvatar
 
         const userAgent = window.navigator.userAgent.toLowerCase()
         const notCompatible = NOT_COMPATIBLE_AGENTS.some(
@@ -196,7 +196,7 @@ const App = defineComponent({
                           option={avatarOption.value}
                           size={280}
                           style={{
-                            transform: `rotateY(${flipped ? -180 : 0}deg)`,
+                            transform: `rotateY(${flipped.value ? -180 : 0}deg)`,
                           }}
                         />
                       </div>

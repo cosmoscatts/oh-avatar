@@ -24,3 +24,4 @@ export const Logo = defineComponent<LogoProps>({
   },
 })
 
+Logo.props = ['size']

@@ -16,10 +16,12 @@ export const ModalWrapper = defineComponent<ModalWrapperProps>({
               ? <div class={styles.modal} onClick={withModifiers(onClose, ['self'])}>
                   {slots.default?.()}
                 </div>
-              : <div></div>
+              : null
           }
         </Transition>
       )
     }
   },
 })
+
+ModalWrapper.props = ['visible', 'onClose']

@@ -6,27 +6,27 @@ interface ScrollbarProps {
 
 export const Scrollbar = defineComponent<ScrollbarProps>({
   setup({ options }, { slots }) {
+    const refScrollWrapper = ref<HTMLDivElement>()
+    let ps: PerfectScrollbar
+
+    onMounted(() => {
+      if (!refScrollWrapper.value) {
+        console.warn('No valid \'PerfectScrollbar\' container found')
+        return
+      }
+
+      ps = new PerfectScrollbar(refScrollWrapper.value, {
+        minScrollbarLength: 20,
+        maxScrollbarLength: 160,
+        ...options,
+      })
+    })
+
+    onUnmounted(() => {
+      ps.destroy()
+    })
+
     return () => {
-      const refScrollWrapper = ref<HTMLDivElement>()
-      let ps: PerfectScrollbar
-
-      onMounted(() => {
-        if (!refScrollWrapper.value) {
-          console.warn('No valid \'PerfectScrollbar\' container found')
-          return
-        }
-
-        ps = new PerfectScrollbar(refScrollWrapper.value, {
-          minScrollbarLength: 20,
-          maxScrollbarLength: 160,
-          ...options,
-        })
-      })
-
-      onUnmounted(() => {
-        ps.destroy()
-      })
-
       return (
         <div ref={refScrollWrapper} class={['relative', 'of-hidden']}>
           {slots.default?.()}
@@ -36,3 +36,4 @@ export const Scrollbar = defineComponent<ScrollbarProps>({
   },
 })
 
+Scrollbar.props = ['options']

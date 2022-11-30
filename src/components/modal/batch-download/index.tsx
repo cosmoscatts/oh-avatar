@@ -51,7 +51,7 @@ export const BatchDownloadModal = defineComponent<BatchDownloadModalProps>({
         const { default: JSZip } = await import('jszip')
         const jsZip = new JSZip()
 
-        for (let i = 0; i <= avatarList?.length; i += 1) {
+        for (let i = 0; i <= avatarList.length; i += 1) {
           const dom = window.document.querySelector(`#avatar-${i}`)
 
           if (dom instanceof HTMLElement) {
@@ -122,22 +122,21 @@ export const BatchDownloadModal = defineComponent<BatchDownloadModalProps>({
 
     const contentBox = (
       <Scrollbar
-          style="height: 100%; overflow: hidden"
-          options={{ suppressScrollX: false }}
-        >
-          {
-            () => (
-              <div class={styles.content}>
-
-            {
-              avatarList?.map((opt, i) => (
-                avatarBox(opt, i)
-              ))
-            }
-          </div>
-            )
-          }
-        </Scrollbar>
+        style="height: 100%; overflow: hidden"
+        options={{ suppressScrollX: false }}
+      >
+        {
+          () => (
+            <div class={styles.content}>
+              {
+                avatarList?.map((opt, i) => (
+                  avatarBox(opt, i)
+                ))
+              }
+            </div>
+          )
+        }
+      </Scrollbar>
     )
 
     return () => {
@@ -156,3 +155,5 @@ export const BatchDownloadModal = defineComponent<BatchDownloadModalProps>({
     }
   },
 })
+
+BatchDownloadModal.props = ['visible', 'avatarList', 'onClose', 'onRegenerate']

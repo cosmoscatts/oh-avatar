@@ -39,3 +39,5 @@ export const DownloadModal = defineComponent<DownloadModalProps>({
     }
   },
 })
+
+DownloadModal.props = ['visible', 'imageUrl', 'onClose']
