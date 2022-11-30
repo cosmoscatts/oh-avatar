@@ -153,7 +153,7 @@ export const Configuration = defineComponent({
 
     const render = (s: Section) => {
       return (<>
-        { _c(s) }
+        { `(${_c(s)})` }
         <ul class={styles['widget-list']}>
           {
  s.widgetList.map(it => (
@@ -178,76 +178,73 @@ export const Configuration = defineComponent({
 
     return () => {
       return (
-  <Scrollbar class={styles['configuration-scroll']}>
-    {
-      () => (
-        <div class={styles.configuration}>
-      <SectionWrapper title={t('label.wrapperShape')}>
-        {
-          () => (
-            <ul class={styles['wrapper-shape']}>
+        <Scrollbar class={styles['configuration-scroll']}>
           {
-            SETTINGS.wrapperShape.map(wrapperShape => (
-              <li
-            key={wrapperShape}
-            class={styles['wrapper-shape__item']}
-            title={t(`wrapperShape.${wrapperShape}`)}
-            onClick={() => switchWrapperShape(wrapperShape)}
-          >
-            <div
-              class={[styles.shape, wrapperShape, ['', 'active'][Number(wrapperShape === avatarOption.value.wrapperShape)]]}
-            />
-          </li>
-            ))
-          }
-        </ul>
-          )
-        }
-      </SectionWrapper>
+            () => (
+              <div class={styles.configuration}>
+            <SectionWrapper title={t('label.wrapperShape')}>
+              {
+                () => (
+                  <ul class={styles['wrapper-shape']}>
+                {
+                  SETTINGS.wrapperShape.map(wrapperShape => (
+                    <li
+                  key={wrapperShape}
+                  class={styles['wrapper-shape__item']}
+                  title={t(`wrapperShape.${wrapperShape}`)}
+                  onClick={() => switchWrapperShape(wrapperShape)}
+                >
+                  <div
+                    class={[styles.shape, wrapperShape, ['', 'active'][Number(wrapperShape === avatarOption.value.wrapperShape)]]}
+                  />
+                </li>
+                  ))
+                }
+              </ul>
+                )
+              }
+            </SectionWrapper>
 
-      <SectionWrapper title={t('label.backgroundColor')}>
-        {() => (
-          <ul class={styles['color-list']}>
-          {
-            SETTINGS.backgroundColor.map(bgColor => (
-              <li
-            key={bgColor}
-            class={styles['color-list__item']}
-            onClick={() => switchBgColor(bgColor)}
-          >
-            <div
-              style={{ background: bgColor }}
-              class={{
-                'bg-color': true,
-                'active': bgColor === avatarOption.value.background.color,
-                'transparent': bgColor === 'transparent',
-              }}
-            ></div>
-          </li>
-            ))
+            <SectionWrapper title={t('label.backgroundColor')}>
+              {() => (
+                <ul class={styles['color-list']}>
+                {
+                  SETTINGS.backgroundColor?.map(bgColor => (
+                    <li
+                      key={bgColor}
+                      class={styles['color-list__item']}
+                      onClick={() => switchBgColor(bgColor)}
+                    >
+                      <div
+                        style={{ background: bgColor }}
+                        class={{
+                          'bg-color': true,
+                          'active': bgColor === avatarOption.value.background.color,
+                          'transparent': bgColor === 'transparent',
+                        }}
+                      ></div>
+                    </li>
+                  ))
+                }
+              </ul>
+              )}
+            </SectionWrapper>
 
-          }
-        </ul>
-        )}
-      </SectionWrapper>
-
-      {
-        sections.value.map(s => (
-          <SectionWrapper
-            key={s.widgetType}
-            title={t(`widgetType.${s.widgetType}`)}
-          >
             {
-              () => render(s)
+              sections.value?.map(s => (
+                <SectionWrapper
+                  key={s.widgetType}
+                  title={t(`widgetType.${s.widgetType}`)}
+                >
+                  {
+                    () => render(s)
+                  }
+                </SectionWrapper>
+              ))
             }
-      </SectionWrapper>
-        ))
-      }
-
-    </div>
-      )
-    }
-  </Scrollbar>
+          </div>
+            )}
+        </Scrollbar>
       )
     }
   },

@@ -16,8 +16,8 @@ export const ActionBar = defineComponent<ActionBarProps>({
 
     const store = useStore()
 
-    const canUndo = computed(() => store.history.past.length > 0)
-    const canRedo = computed(() => store.history.future.length > 0)
+    const canUndo = computed(() => store.history.past?.length > 0)
+    const canRedo = computed(() => store.history.future?.length > 0)
 
     const actions = computed(() => [
       {
@@ -47,9 +47,8 @@ export const ActionBar = defineComponent<ActionBarProps>({
     return () => {
       return (
         <div class={styles['action-menu']}>
-
           {
-            actions.value.map(({ type, tip, disabled, icon }) => {
+            actions.value?.map(({ type, tip, disabled, icon }) => {
               return <div
                         key={type}
                         class={[styles['menu-item'], [styles['menu-item'], 'disabled']][Number(disabled)]}

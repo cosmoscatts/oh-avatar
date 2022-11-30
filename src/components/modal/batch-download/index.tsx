@@ -51,7 +51,7 @@ export const BatchDownloadModal = defineComponent<BatchDownloadModalProps>({
         const { default: JSZip } = await import('jszip')
         const jsZip = new JSZip()
 
-        for (let i = 0; i <= avatarList.length; i += 1) {
+        for (let i = 0; i <= avatarList?.length; i += 1) {
           const dom = window.document.querySelector(`#avatar-${i}`)
 
           if (dom instanceof HTMLElement) {
@@ -130,7 +130,7 @@ export const BatchDownloadModal = defineComponent<BatchDownloadModalProps>({
               <div class={styles.content}>
 
             {
-              avatarList.map((opt, i) => (
+              avatarList?.map((opt, i) => (
                 avatarBox(opt, i)
               ))
             }

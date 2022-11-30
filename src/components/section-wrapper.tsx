@@ -8,7 +8,7 @@ export const SectionWrapper = defineComponent<SectionWrapperProps>({
         <div class={['py-[1.8rem]', 'px-1rem']}>
           <div class={['mb-[1.5rem]', 'font-bold', 'lh-23px']}>{ title }</div>
           <div>
-            {slots.default?.() ?? null}
+            {slots.default?.()}
           </div>
         </div>
       )

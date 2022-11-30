@@ -29,7 +29,7 @@ export const Scrollbar = defineComponent<ScrollbarProps>({
 
       return (
         <div ref={refScrollWrapper} class={['relative', 'of-hidden']}>
-          {slots.default?.() ?? null}
+          {slots.default?.()}
         </div>
       )
     }

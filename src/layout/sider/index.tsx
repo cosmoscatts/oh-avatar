@@ -10,7 +10,7 @@ const Sider = defineComponent({
     return () => {
       return (
         <aside class={classNames}>
-          { slots.default?.() ?? null }
+          {slots.default?.()}
 
           <div class={styles.trigger} onClick={func}>
             <img src={IconRight} class={styles['icon-right']} alt="arrow" />

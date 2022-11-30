@@ -43,7 +43,7 @@ const Container = defineComponent({
     return () => {
       return (
         <section class={classNames}>
-          { slots.default?.() ?? null }
+          {slots.default?.()}
         </section>
       )
     }

@@ -147,7 +147,7 @@ const App = defineComponent({
 
     watchEffect(() => {
       avatarListVisible.value
-        = Array.isArray(avatarList.value) && avatarList.value.length > 0
+        = Array.isArray(avatarList.value) && avatarList.value?.length > 0
     })
 
     async function generateMultiple(count = 5 * 6) {
@@ -219,7 +219,7 @@ const App = defineComponent({
                           onClick={handleDownload}
                         >
                           {
-                            downloading
+                            downloading.value
                               ? `${t('action.downloading')}...`
                               : t('action.download')
                           }
