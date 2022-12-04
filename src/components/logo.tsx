@@ -5,10 +5,10 @@ interface LogoProps {
 }
 
 export const Logo = defineComponent<LogoProps>({
-  setup({ size = 2.5 }) {
+  setup(props) {
     const _style = computed(() => ({
-      width: `${size}rem`,
-      height: `${size}rem`,
+      width: `${props.size}rem`,
+      height: `${props.size}rem`,
     }))
 
     return () => {

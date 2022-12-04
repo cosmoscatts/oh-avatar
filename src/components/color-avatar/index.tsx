@@ -1,4 +1,3 @@
-import type { ComputedRef } from 'vue'
 import styles from './index.module.less'
 import { Background } from './components/background'
 import { WrapperShape } from '~/enums'
@@ -9,15 +8,16 @@ import { widgetData } from '~/utils/dynamic-data'
 
 interface ColorAvatarProps {
   id?: string
-  option: ComputedRef<AvatarOption>
+  option: AvatarOption
   size?: number
 }
 
 export const ColorAvatar = defineComponent<ColorAvatarProps>({
-  setup({ id, option = computed(() => getRandomAvatarOption()), size = 280 }, { expose }) {
+  setup(props, { expose }) {
     const refAvatar = ref<HTMLDivElement>()
     expose({ refAvatar })
 
+    const option = computed(() => props.option ?? getRandomAvatarOption())
     function getWrapperShapeClassName() {
       if (!option.value.wrapperShape)
         return ''
@@ -30,8 +30,10 @@ export const ColorAvatar = defineComponent<ColorAvatarProps>({
 
     const svgContent = ref('')
 
-    watchEffect(async () => {
-      const sortedList = Object.entries(option.value.widgets).sort(
+    async function createAvatar() {
+      const { size = 280 } = props
+      const { value: _option } = option
+      const sortedList = Object.entries(_option.widgets).sort(
         ([prevShape, prev], [nextShape, next]) => {
           const ix = prev.zIndex ?? AVATAR_LAYER[prevShape]?.zIndex ?? 0
           const iix = next.zIndex ?? AVATAR_LAYER[nextShape]?.zIndex ?? 0
@@ -79,23 +81,26 @@ export const ColorAvatar = defineComponent<ColorAvatarProps>({
           </g>
         </svg>
       `
-    })
+    }
+    createAvatar()
+
+    watch(() => props.option, createAvatar, { deep: true })
 
     return () => {
       return (
         <div
           ref={refAvatar}
-          id={id}
+          id={props.id}
           class={{
             [styles['color-avatar']]: true,
             [styles[getWrapperShapeClassName()]]: true,
           }}
           style={{
-            width: `${size}px`,
-            height: `${size}px`,
+            width: `${props.size}px`,
+            height: `${props.size}px`,
           }}
         >
-          <Background color={computed(() => option.value.background.color)} />
+          <Background color={props.option.background.color} />
           <div class={styles['avatar-payload']} v-html={svgContent.value} />
         </div>
       )

@@ -1,12 +1,11 @@
-import type { ComputedRef } from 'vue'
 import type { AvatarOption } from '~/types'
 
 interface BackgroundProps {
-  color: ComputedRef<AvatarOption['background']['color']>
+  color: AvatarOption['background']['color']
 }
 
 export const Background = defineComponent<BackgroundProps>({
-  setup({ color }) {
+  setup(props) {
     const classNames = [
       'absolute',
       'top-0',
@@ -15,7 +14,7 @@ export const Background = defineComponent<BackgroundProps>({
       'hfull',
     ]
     const _style = computed(() => ({
-      background: color.value,
+      background: props.color,
       transition: 'background-color 0.1s',
     }))
     return () => {

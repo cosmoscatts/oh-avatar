@@ -157,13 +157,13 @@
         background-color: lighten(@color-configuration, 0);
       }
 
-      & > :deep(svg) {
+      & svg {
         width: 100% !important;
-        height: 100% !important;
-      }
+        height: 100% !important; 
 
-      & :deep(path) {
-        stroke: @color-stroke !important;
+        & path {
+          stroke: @color-stroke !important;
+        }
       }
     }
   }

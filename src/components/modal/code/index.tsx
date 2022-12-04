@@ -51,7 +51,7 @@ export const CodeModal = defineComponent<CodeModalProps>({
 
     return () => {
       return (
-        <ModalWrapper visible={visible} onClose={onClose}>
+        <ModalWrapper visible={visible.value} onClose={onClose}>
           {
             () => (
               <div class={styles['code-box']}>

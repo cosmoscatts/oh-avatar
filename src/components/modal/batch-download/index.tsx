@@ -1,4 +1,3 @@
-import type { Ref } from 'vue'
 import { name as appName } from '../../../../package.json'
 import { ModalWrapper } from '../wrapper'
 import styles from './index.module.less'
@@ -8,14 +7,14 @@ import type { AvatarOption } from '~/types'
 import { recordEvent } from '~/utils/ga'
 
 interface BatchDownloadModalProps {
-  visible?: Ref<boolean>
-  avatarList?: Ref<AvatarOption[]>
+  visible?: boolean
+  avatarList?: AvatarOption[]
   onClose: () => void
   onRegenerate: () => void
 }
 
 export const BatchDownloadModal = defineComponent<BatchDownloadModalProps>({
-  setup({ visible = ref(false), avatarList = ref([]), onClose, onRegenerate }) {
+  setup(props) {
     const { t } = useI18n()
 
     const making = ref(false)
@@ -43,7 +42,7 @@ export const BatchDownloadModal = defineComponent<BatchDownloadModalProps>({
     }
 
     async function make() {
-      if (avatarList.value.length && !making.value) {
+      if (props.avatarList?.length && !making.value) {
         making.value = true
         madeCount.value = 1
 
@@ -52,7 +51,7 @@ export const BatchDownloadModal = defineComponent<BatchDownloadModalProps>({
         const { default: JSZip } = await import('jszip')
         const jsZip = new JSZip()
 
-        for (let i = 0; i <= avatarList.value.length; i += 1) {
+        for (let i = 0; i <= props.avatarList.length; i += 1) {
           const dom = window.document.querySelector(`#avatar-${i}`)
 
           if (dom instanceof HTMLElement) {
@@ -93,7 +92,7 @@ export const BatchDownloadModal = defineComponent<BatchDownloadModalProps>({
                   type="button"
                   class={styles['regenerate-btn']}
                   disabled={making.value}
-                  onClick={onRegenerate}
+                  onClick={props.onRegenerate}
                 >
                   { t('text.regenerate') }
                 </button>
@@ -102,7 +101,7 @@ export const BatchDownloadModal = defineComponent<BatchDownloadModalProps>({
                   {
                     making.value
                       ? `${t('text.downloadingMultiple')}(${madeCount.value}/${
-                          avatarList.value?.length
+                          props.avatarList?.length ?? 1
                         })`
                       : t('text.downloadMultiple')
                   }
@@ -120,7 +119,7 @@ export const BatchDownloadModal = defineComponent<BatchDownloadModalProps>({
           class={styles['avatar-box']} key={i}
           style={ `opacity: ${making.value && i + 1 > madeCount.value ? 0.5 : 1}` }
         >
-          <ColorAvatar id={`avatar-${i}`} option={computed(() => opt)} size={280} />
+          <ColorAvatar id={`avatar-${i}`} option={opt} size={280} />
 
           <button class={styles['download-single']} onClick={() => handleDownload(i)}>
             { t('action.download') }
@@ -130,7 +129,7 @@ export const BatchDownloadModal = defineComponent<BatchDownloadModalProps>({
     }
 
     const renderAvatarList = computed(() => {
-      return avatarList.value.map((opt, i) => (
+      return props.avatarList?.map((opt, i) => (
         avatarBox(opt, i)
       ))
     })
@@ -162,7 +161,7 @@ export const BatchDownloadModal = defineComponent<BatchDownloadModalProps>({
 
     return () => {
       return (
-        <ModalWrapper visible={visible} onClose={onClose}>
+        <ModalWrapper visible={props.visible} onClose={props.onClose}>
           {
             () => (
               <div class={styles.container}>
