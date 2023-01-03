@@ -41,9 +41,9 @@ export const Configuration = defineComponent({
     async function getWidgets(widgetType: WidgetType) {
       const list = SETTINGS[`${widgetType}Shape`]
       const promises: Promise<string>[] = list.map(async (widget: string) => {
-        if (widget !== 'none' && previewData?.[widgetType]?.[widget])
+        if (widget !== 'none' && previewData?.[widgetType]?.[widget]) {
           return (await previewData[widgetType][widget]()).default
-
+        }
         return 'X'
       })
       const svgRawList = await Promise.all(promises).then((raw) => {
@@ -59,8 +59,9 @@ export const Configuration = defineComponent({
     }
 
     function switchWrapperShape(wrapperShape: WrapperShape) {
-      if (wrapperShape !== avatarOption.value.wrapperShape)
+      if (wrapperShape !== avatarOption.value.wrapperShape) {
         setAvatarOption({ ...avatarOption.value, wrapperShape })
+      }
     }
 
     function switchBgColor(bgColor: string) {
@@ -106,9 +107,9 @@ export const Configuration = defineComponent({
     }
 
     function getWidgetColor(type: string) {
-      if (type === WidgetType.Tops || type === WidgetType.Clothes)
+      if (type === WidgetType.Tops || type === WidgetType.Clothes) {
         return avatarOption.value.widgets[type]?.fillColor
-
+      }
       else return ''
     }
 

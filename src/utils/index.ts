@@ -150,8 +150,7 @@ export function showConfetti() {
     const canvasEle: HTMLCanvasElement | null
       = document.querySelector('#confetti')
 
-    if (!canvasEle)
-      return
+    if (!canvasEle) return
 
     const myConfetti = confetti.create(canvasEle, {
       resize: true,
@@ -179,18 +178,15 @@ export function showConfetti() {
         colors: confettiColors,
       })
 
-      if (performance.now() < duration)
-        requestAnimationFrame(frame)
+      if (performance.now() < duration) requestAnimationFrame(frame)
     })()
   })
 }
 
 export function highlightJSON(json: string): string {
-  if (!json)
-    return ''
+  if (!json) return ''
 
-  if (typeof json != 'string')
-    json = JSON.stringify(json, undefined, 2)
+  if (typeof json != 'string') json = JSON.stringify(json, undefined, 2)
 
   json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
 
@@ -199,19 +195,13 @@ export function highlightJSON(json: string): string {
     (match) => {
       let cls = ''
       if (match.startsWith('"')) {
-        if (match.endsWith(':'))
-          cls = 'key'
-
-        else
-          cls = 'string'
-      }
-      else if (/true|false/.test(match)) {
+        if (match.endsWith(':')) cls = 'key'
+        else cls = 'string'
+      } else if (/true|false/.test(match)) {
         cls = 'boolean'
-      }
-      else if (/null/.test(match)) {
+      } else if (/null/.test(match)) {
         cls = 'null'
-      }
-      else {
+      } else {
         cls = 'number'
       }
       return `<span class="token ${cls}">${match}</span>`

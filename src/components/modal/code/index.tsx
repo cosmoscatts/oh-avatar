@@ -22,8 +22,9 @@ export const CodeModal = defineComponent<CodeModalProps>({
     const highlightedCode = ref('')
 
     watchEffect(() => {
-      if (codeJSON.value)
+      if (codeJSON.value) {
         highlightedCode.value = highlightJSON(codeJSON.value)
+      }
     })
 
     const copied = ref(false)

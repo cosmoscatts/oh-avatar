@@ -18,8 +18,7 @@ const Container = defineComponent({
         obj = obj || window
         let running = false
         const func = () => {
-          if (running)
-            return
+          if (running) return
 
           running = true
           requestAnimationFrame(() => {

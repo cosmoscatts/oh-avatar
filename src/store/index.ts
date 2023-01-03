@@ -32,8 +32,7 @@ export const useStore = defineStore(
       },
       undo() {
         const { value: _history } = history
-        if (!_history.past.length)
-          return
+        if (!_history.past.length) return
         const previous = _history.past[_history.past.length - 1]
         const newPast = _history.past.slice(
           0,
@@ -47,8 +46,7 @@ export const useStore = defineStore(
       },
       redo() {
         const { value: _history } = history
-        if (!_history.future.length)
-          return
+        if (!_history.future.length) return
         const next = _history.future[0]
         const newFuture = _history.future.slice(1)
         history.value = {
@@ -58,8 +56,9 @@ export const useStore = defineStore(
         }
       },
       setSiderStatus(status: boolean) {
-        if (isSiderCollapsed.value !== status)
+        if (isSiderCollapsed.value !== status) {
           isSiderCollapsed.value = status
+        }
       },
     }
   },
@@ -70,5 +69,7 @@ export const useStore = defineStore(
   },
 )
 
-if (import.meta.hot)
+if (import.meta.hot) {
   import.meta.hot.accept(acceptHMRUpdate(useStore, import.meta.hot))
+}
+

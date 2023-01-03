@@ -19,8 +19,7 @@ export const ColorAvatar = defineComponent<ColorAvatarProps>({
 
     const option = computed(() => props.option ?? getRandomAvatarOption())
     function getWrapperShapeClassName() {
-      if (!option.value.wrapperShape)
-        return ''
+      if (!option.value.wrapperShape) return ''
       return {
         [WrapperShape.Circle]: WrapperShape.Circle,
         [WrapperShape.Square]: WrapperShape.Square,

@@ -48,8 +48,7 @@ const App = defineComponent({
         colorfulOption.wrapperShape = avatarOption.value.wrapperShape
         setAvatarOption(colorfulOption)
         showConfetti()
-      }
-      else {
+      } else {
         const randomOption = getRandomAvatarOption(avatarOption.value)
         setAvatarOption(randomOption)
       }
